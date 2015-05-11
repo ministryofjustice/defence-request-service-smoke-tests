@@ -1,0 +1,115 @@
+db:
+  image: postgres
+
+srv:
+  image: defence-request-service:production_localbuild
+  command:
+    - bash
+    - -c
+    - export DATABASE_URL="postgres://postgres:postgres@${DB_1_PORT_5432_TCP_ADDR}:${DB_1_PORT_5432_TCP_PORT}/${DB_NAME}";
+      bin/bundle exec rake db:reset;
+      bundle exec unicorn -c config/unicorn.rb
+  environment:
+    AUTHENTICATION_REDIRECT_URI: 1
+    AUTHENTICATION_SITE_URL: http://auth:45454
+    DB_NAME: defence_request_service
+    FOREMAN: 1
+    UNICORN_NO_PID: 1
+    UNICORN_NO_SOCKET: 1
+    UNICORN_PORT: 12121
+
+    SOLICITOR_SEARCH_URL_PREFIX: http://solicitor-search.herokuapp.com
+
+    # These is only used in development, and are not secret:
+    SECRET_KEY_BASE: FA11FA11FA11FA11FA11
+    MAILER_DEFAULT_URL_HOST: www.example.com
+    MAILER_DEFAULT_URL_PORT: 80
+    MAILER_DEFAULT_URL_PROTOCOL: https
+    MAILER_SMTP_USER_NAME: some_invalid_email_user_name
+    MAILER_SMTP_PASSWORD: some_invalid_email_password
+    SANDBOX_EMAIL: true
+    SANDBOX_EMAIL_ADDRESS: iamadefencesolicitor@gmail.com
+    GOOGLE_ANALYTICS_UA: UA-12345-1
+    AUTHENTICATION_APPLICATION_ID: FA11FA11FA11FA11FA14
+    AUTHENTICATION_APPLICATION_SECRET: FA11FA11FA11FA11FA15
+
+    RAILS_SERVE_STATIC_FILES: 1
+    FORCE_SSL: false
+  ports:
+    - "12121:12121"
+  links:
+    - db
+    - auth
+
+auth:
+  image: defence-request-service-auth:production_localbuild
+  command:
+    - bash
+    - -c
+    - export DATABASE_URL="postgres://postgres:postgres@${DB_1_PORT_5432_TCP_ADDR}:${DB_1_PORT_5432_TCP_PORT}/${DB_NAME}";
+      bin/bundle exec rake db:reset;
+      bundle exec unicorn -c config/unicorn.rb
+  environment:
+    DB_NAME: defence_request_service_auth
+    FOREMAN: 1
+    ROTA_REDIRECT_URI: http://rota:34343/auth/defence_request/callback
+    SERVICE_REDIRECT_URI: http://srv:12121/auth/defence_request/callback
+    UNICORN_NO_PID: 1
+    UNICORN_NO_SOCKET: 1
+    UNICORN_PORT: 45454
+
+    # These is only used in development, and are not secret:
+    SECRET_KEY_BASE: FA11FA11FA11FA11FA11
+    DEVISE_KEY: FA11FA11FA11FA11FA11
+    DEVISE_SALT: FA11FA11FA11FA11FA11
+    ROTA_UID: FA11FA11FA11FA11FA12
+    ROTA_SECRET: FA11FA11FA11FA11FA13
+    SERVICE_UID: FA11FA11FA11FA11FA14
+    SERVICE_SECRET: FA11FA11FA11FA11FA15
+    MAILER_DEFAULT_URL_HOST: www.example.com
+    MAILER_DEFAULT_URL_PORT: 80
+    MAILER_DEFAULT_URL_PROTOCOL: https
+    MAILER_SMTP_USER_NAME: some_invalid_email_user_name
+    MAILER_SMTP_PASSWORD: some_invalid_email_password
+    SANDBOX_EMAIL: true
+    SANDBOX_EMAIL_ADDRESS: iamadefencesolicitor@gmail.com
+
+    RAILS_SERVE_STATIC_FILES: 1
+    FORCE_SSL: false
+    FORCE_SSL_IN_REDIRECT_URI: false
+
+  ports:
+    - "45454:45454"
+  links:
+    - db
+
+rota:
+  image: defence-request-service-rota:production_localbuild
+  command:
+    - bash
+    - -c
+    - export DATABASE_URL="postgres://postgres:postgres@${DB_1_PORT_5432_TCP_ADDR}:${DB_1_PORT_5432_TCP_PORT}/${DB_NAME}";
+      bin/bundle exec rake db:reset;
+      bundle exec unicorn -c config/unicorn.rb
+  environment:
+   AUTHENTICATION_REDIRECT_URI: 1
+   AUTHENTICATION_SITE_URL: http://auth:45454
+   DB_NAME: defence_request_service_rota
+   FOREMAN: 1
+   UNICORN_NO_PID: 1
+   UNICORN_NO_SOCKET: 1
+   UNICORN_PORT: 34343
+
+    # These is only used in development, and are not secret:
+   SECRET_KEY_BASE: FA11FA11FA11FA11FA11
+   AUTHENTICATION_APPLICATION_ID: FA11FA11FA11FA11FA12
+   AUTHENTICATION_APPLICATION_SECRET: FA11FA11FA11FA11FA13
+
+   RAILS_SERVE_STATIC_FILES: 1
+   FORCE_SSL: false
+
+  ports:
+   - "34343:34343"
+  links:
+   - db
+   - auth

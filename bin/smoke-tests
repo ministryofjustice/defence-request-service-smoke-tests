@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+set -x
+
+# Restart services
+docker-compose stop
+docker-compose up -d
+
+# Run tests in seperate contianer
+docker run -v ~/Code/defence-request-service-smoke-tests:/usr/src -t -i \
+  --link defencerequestservicesmoketests_auth_1:auth \
+  --link defencerequestservicesmoketests_srv_1:srv \
+  --link defencerequestservicesmoketests_rota_1:rota \
+  defence-request-service-smoke:test_localbuild
+
+docker-compose stop
+
