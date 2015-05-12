@@ -13,6 +13,3 @@ docker run -v ~/Code/defence-request-service-smoke-tests:/usr/src -t -i \
   --link defencerequestservicesmoketests_srv_1:srv \
   --link defencerequestservicesmoketests_rota_1:rota \
   defence-request-service-smoke:test_localbuild
-
-docker-compose stop
-
