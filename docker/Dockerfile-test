@@ -25,7 +25,7 @@ RUN ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/loca
 ###############################################################################
 # Defaults for executing container
 ###############################################################################
-VOLUME /usr/src
+COPY . /usr/src
 WORKDIR /usr/src
 
 # Open rails console by default
