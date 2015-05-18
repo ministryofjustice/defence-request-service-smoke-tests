@@ -8,7 +8,7 @@ docker-compose stop
 docker-compose up -d
 
 # Run tests in seperate contianer
-docker run -v ~/Code/defence-request-service-smoke-tests:/usr/src -t -i \
+docker run -t -i \
   --link defencerequestservicesmoketests_auth_1:auth \
   --link defencerequestservicesmoketests_srv_1:srv \
   --link defencerequestservicesmoketests_rota_1:rota \
