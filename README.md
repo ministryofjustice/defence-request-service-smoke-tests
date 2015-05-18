@@ -38,3 +38,7 @@ Once initialised, running the tests should be as simple as the
 following:
 
 ``` cd defence-request-service-smoke-tests && ./bin/smoke-tests ```
+
+## Test Run Order
+* the test order is not randomised
+* the 'log-in' test (named 01_*) and the 'log-out' test (named 99_*) should be run first and last respectively
