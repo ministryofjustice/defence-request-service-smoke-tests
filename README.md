@@ -17,7 +17,7 @@ The **first time** you want to run things in Docker (or each time you adjust you
 cd defence-request-service && make production_container && cd ..
 cd defence-request-service-auth && make production_container && cd ..
 cd defence-request-service-rota && make production_container && cd ..
-cd defence-request-service-smoke-tests && make test_container && cd ..
+cd defence-request-service-smoke-tests && make && cd ..
 ```
 
 ## Running in the Tests
@@ -29,8 +29,7 @@ your-mac-name:ministryofjustice you$ ls -lad defence-request-service*
 drwxr-xr-x  34 you  staff  1156 21 Apr 23:55 defence-request-service
 drwxr-xr-x  34 you  staff  1156 23 Apr 11:21 defence-request-service-auth
 drwxr-xr-x  31 you  staff  1054 22 Apr 17:08 defence-request-service-rota
-drwxr-xr-x  12 you  staff   408 23 Apr 11:29
-defence-request-service-smoke-tests
+drwxr-xr-x  12 you  staff   408 23 Apr 11:29 defence-request-service-smoke-tests
 your-mac-name:ministryofjustice you$
 ```
 
