@@ -2,8 +2,11 @@ source "https://rubygems.org"
 
 ruby "2.2.2"
 
-gem "rspec"
 gem "capybara"
+gem "launchy"
+gem "parallel"
 gem "poltergeist"
 gem "pry"
-gem "launchy"
+gem "rspec"
+gem "safe_yaml"
+gem "selenium-webdriver"

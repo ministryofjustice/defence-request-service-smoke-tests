@@ -38,6 +38,12 @@ following:
 
 ``` cd defence-request-service-smoke-tests && ./bin/smoke-tests ```
 
+## Running Against Browsersstack
+
+You will need to have built the containers as per the instructions above.
+
+``` cd defence-request-service-smoke-tests && BROWSERSTACK_USERNAME=username BROWSERSTACK_PASSWORD=password ./bin/smoke-tests bundle exec rake browserstack:run```
+
 ## Test Run Order
 * the test order is not randomised
 * the 'log-in' test (named 01_*) and the 'log-out' test (named 99_*) should be run first and last respectively

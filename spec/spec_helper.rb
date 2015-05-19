@@ -1,23 +1,24 @@
-require 'bundler'
+require "bundler"
 Bundler.require
 
-Dir[Pathname.new(__FILE__).join('../support/**/*.rb')].each { |file| require file }
+Dir[Pathname.new(__FILE__).join("../support/**/*.rb")].each { |file| require file }
 
-require 'capybara/dsl'
+require "capybara/dsl"
 require "capybara/poltergeist"
 
 print_around_thing = ->(&thing) do
   puts "Waiting for apps to start"
   thr = Thread.new do
     loop do
-      print "."
       sleep 1
+      print "."
     end
   end
 
   thing.call
 
   thr.kill
+  puts ""
   puts "All apps have started"
 end
 

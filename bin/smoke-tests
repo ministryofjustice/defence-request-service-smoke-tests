@@ -3,13 +3,23 @@
 set -e
 set -x
 
-# Restart services
-docker-compose stop
-docker-compose up -d
+if [ -z "${BUILD_NUMBER}" ]; then
+    BUILD_NUMBER="not_set_`date +%s`"
+    PROJECT_NAME="dsdsmoketests"
+else
+    PROJECT_NAME="dsdsmoketests_${BUILD_NUMBER}"
+fi
 
-# Run tests in seperate contianer
+# Restart services
+docker-compose -p ${PROJECT_NAME} stop
+docker-compose -p ${PROJECT_NAME} up -d
+
+# Run tests in seperate container
 docker run -t -i \
-  --link defencerequestservicesmoketests_auth_1:auth \
-  --link defencerequestservicesmoketests_srv_1:srv \
-  --link defencerequestservicesmoketests_rota_1:rota \
-  defence-request-service-smoke:test_localbuild
+        -e "BUILD_NUMBER=${BUILD_NUMBER}" \
+        -e "BROWSERSTACK_USERNAME=${BROWSERSTACK_USERNAME}" \
+        -e "BROWSERSTACK_PASSWORD=${BROWSERSTACK_PASSWORD}" \
+        --link "${PROJECT_NAME}_auth_1:auth" \
+        --link "${PROJECT_NAME}_srv_1:srv" \
+        --link "${PROJECT_NAME}_rota_1:rota" \
+        defence-request-service-smoke:test_localbuild $*
