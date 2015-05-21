@@ -9,7 +9,7 @@ if ENV["BROWSERSTACK_BROWSER"]
 
   capabilities = JSON.parse(ENV.fetch("BROWSERSTACK_BROWSER"))
   capabilities["project"] = "Defence Request Service Smoke Tests"
-  capabilities["build"] = ENV.fetch("BUILD_NUMBER", "Build #{Time.now.to_i}")
+  capabilities["build"] = ENV.fetch("BUILD_NUMBER") if ENV.key?("BUILD_NUMBER")
   capabilities["acceptSslCerts"] = true
 
   capabilities["browserstack.debug"] = true
