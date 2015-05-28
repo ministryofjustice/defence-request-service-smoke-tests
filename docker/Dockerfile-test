@@ -22,11 +22,18 @@ RUN ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/loca
     ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/bin/phantomjs && \
     rm -f /usr/local/share/phantomjs-1.9.7-linux-x86_64.tar.bz2
 
+
+###############################################################################
+# Install BrowserStack
+###############################################################################
+# From https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
+ADD vendor/downloads/BrowserStackLocal /usr/local/bin/
+
 ###############################################################################
 # Defaults for executing container
 ###############################################################################
 COPY . /usr/src
 WORKDIR /usr/src
 
-# Open rails console by default
+# Run rspec by default
 CMD ["bin/bundle", "exec", "rspec"]
