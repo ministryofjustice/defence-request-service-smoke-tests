@@ -2,8 +2,17 @@ require 'spec_helper'
 
 RSpec.describe "Creating Defence Request" do
   specify "CSO creates a new Defence Request" do
-    visit SERVICE_APP_URI
+    given_cso_is_in_the_service_app
+    when_they_create_and_submit_new_request
+    then_they_are_on_the_dashboard
+    and_they_can_see_the_new_request_in_the_list
+  end
 
+  def given_cso_is_in_the_service_app
+    visit SERVICE_APP_URI
+  end
+
+  def when_they_create_and_submit_new_request
     click_link "New request"
 
     within ".detainee" do
@@ -39,10 +48,15 @@ RSpec.describe "Creating Defence Request" do
     click_button "Create request"
 
     click_button "Submit request"
+  end
 
+  def then_they_are_on_the_dashboard
     expect(page.current_url).to eql("#{SERVICE_APP_URI}/dashboard")
+  end
 
+  def and_they_can_see_the_new_request_in_the_list
     expect(page).to have_css(".name", text: "Mannie Badder")
     expect(page).to have_css(".state", text: "Submitted")
   end
+
 end
