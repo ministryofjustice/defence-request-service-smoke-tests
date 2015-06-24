@@ -10,6 +10,8 @@ srv:
       bin/bundle exec rake db:reset;
       bundle exec unicorn -c config/unicorn.rb
   environment:
+    ACTIVE_JOB_ADAPTER: inline
+    ACTIVE_JOB_QUEUE_PREFIX: inline
     AUTHENTICATION_REDIRECT_URI: 1
     AUTHENTICATION_SITE_URL: http://auth:45454
     DB_NAME: defence_request_service
@@ -33,6 +35,8 @@ srv:
     AUTHENTICATION_APPLICATION_ID: FA11FA11FA11FA11FA14
     AUTHENTICATION_APPLICATION_SECRET: FA11FA11FA11FA11FA15
 
+    AWS_S3_ASSET_BUCKET_NAME: unused
+    AWS_REGION: unused
     RAILS_SERVE_STATIC_FILES: 1
     FORCE_SSL: false
   ports:
@@ -50,6 +54,8 @@ auth:
       bin/bundle exec rake db:reset;
       bundle exec unicorn -c config/unicorn.rb
   environment:
+    ACTIVE_JOB_ADAPTER: inline
+    ACTIVE_JOB_QUEUE_PREFIX: inline
     DB_NAME: defence_request_service_auth
     FOREMAN: 1
     ROTA_REDIRECT_URI: http://rota:34343/auth/defence_request/callback
@@ -74,6 +80,8 @@ auth:
     SANDBOX_EMAIL: true
     SANDBOX_EMAIL_ADDRESS: iamadefencesolicitor@gmail.com
 
+    AWS_S3_ASSET_BUCKET_NAME: unused
+    AWS_REGION: unused
     RAILS_SERVE_STATIC_FILES: 1
     FORCE_SSL: false
     FORCE_SSL_IN_REDIRECT_URI: false
@@ -92,6 +100,8 @@ rota:
       bin/bundle exec rake db:reset;
       bundle exec unicorn -c config/unicorn.rb
   environment:
+   ACTIVE_JOB_ADAPTER: inline
+   ACTIVE_JOB_QUEUE_PREFIX: inline
    AUTHENTICATION_REDIRECT_URI: 1
    AUTHENTICATION_SITE_URL: http://auth:45454
    DB_NAME: defence_request_service_rota
@@ -105,6 +115,8 @@ rota:
    AUTHENTICATION_APPLICATION_ID: FA11FA11FA11FA11FA12
    AUTHENTICATION_APPLICATION_SECRET: FA11FA11FA11FA11FA13
 
+   AWS_S3_ASSET_BUCKET_NAME: unused
+   AWS_REGION: unused
    RAILS_SERVE_STATIC_FILES: 1
    FORCE_SSL: false
 
